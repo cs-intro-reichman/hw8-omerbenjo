@@ -59,7 +59,7 @@ public class User {
      */
     public boolean follows(String name) {
         for (int i = 0; i < fCount; i++) {
-            if (follows[i].equals(name)) {
+            if (follows[i].equalsIgnoreCase(name)) {
                 return true;
             }
         }
@@ -79,7 +79,7 @@ public class User {
         }
         return false;
     }
-
+}
     /**
      * Removes the given name from the follows list of this user. If successful,
      * returns true. If the name is not in the list, does nothing and returns

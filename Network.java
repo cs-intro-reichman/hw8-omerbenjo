@@ -39,7 +39,7 @@ public class Network {
      */
     public User getUser(String name) {
         for (int i = 0; i < userCount; i++) {
-            if (users[i].getName().equals(name)) {
+            if (users[i].getName().equalsIgnoreCase(name)) {
                 return users[i];
             }
         }
@@ -71,6 +71,7 @@ public class Network {
         if (getUser(name2) == null || getUser(name1) == null) {
             return false;
         }
+        if(name1.equals(name2))return false;
         if (getUser(name1).addFollowee(name2)) {
             return true;
         }
@@ -108,6 +109,7 @@ public class Network {
                 tempCounter = i;
             }
         }
+        if (tempCounter==0) return null;
         return users[tempCounter].getName();
     }
 
@@ -128,8 +130,9 @@ public class Network {
 
     // Returns a textual description of all the users in this network, and who they follow.
     public String toString() {
-        String ans = "";
+        String ans = "Network:";
         for (int i = 0; i < userCount; i++) {
+            ans+= System.lineSeparator();
             ans = ans + users[i].toString() + " ";
         }
         return ans;
