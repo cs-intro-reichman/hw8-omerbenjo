@@ -1,6 +1,7 @@
 
 /** Represents a user in a social network. A user is characterized by a name,
  *  a list of user names that s/he follows, and the list's size. */
+
 public class User {
 
     // Maximum number of users that a user can follow
@@ -78,7 +79,6 @@ public class User {
             return true;
         }
         return false;
-    }
 }
     /**
      * Removes the given name from the follows list of this user. If successful,
@@ -102,10 +102,11 @@ public class User {
         return true;
     }
 
+
     /**
      * Counts the number of users that both this user and the other user follow.
      * /* Notice: This is the size of the intersection of the two follows lists.
-     */
+    //  */
     public int countMutual(User other) {
         int cMutual = 0;
         for (int i = 0; i < this.fCount; i++) {
@@ -141,3 +142,4 @@ public class User {
         return ans;
     }
 }
+
