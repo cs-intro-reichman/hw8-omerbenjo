@@ -71,7 +71,9 @@ public class Network {
         if (getUser(name2) == null || getUser(name1) == null) {
             return false;
         }
-        if(name1.equals(name2))return false;
+        if (name1.equals(name2)) {
+            return false;
+        }
         if (getUser(name1).addFollowee(name2)) {
             return true;
         }
@@ -102,15 +104,30 @@ public class Network {
      * The user who appears the most in the follow lists of all the users.
      */
     public String mostPopularUser() {
-        int tempCounter = 0;
+        int[] followerCounter = new int[userCount];
 
         for (int i = 0; i < userCount; i++) {
-            if (followeeCount(users[i].getName()) > followeeCount(users[tempCounter].getName())) {
-                tempCounter = i;
+            User user = users[i];
+            for (int j = 0; j < userCount; j++) {
+                if (i == j) {
+                    continue;
+                }
+                if (users[j].follows(user.getName())) {
+                    followerCounter[i]++;
+                }
             }
         }
-        if (tempCounter==0) return null;
-        return users[tempCounter].getName();
+        int maxFollowers = 0;
+        int mostPopularIndex = -1;
+        for (int i = 0; i < userCount; i++) {
+            if (followerCounter[i] > maxFollowers || mostPopularIndex == -1) {
+                maxFollowers = followerCounter[i];
+                mostPopularIndex = i;
+            }
+        }
+        if(mostPopularIndex == -1) return null;
+
+        return users[mostPopularIndex].getName();
     }
 
     /**
@@ -132,7 +149,7 @@ public class Network {
     public String toString() {
         String ans = "Network:";
         for (int i = 0; i < userCount; i++) {
-            ans+= System.lineSeparator();
+            ans += System.lineSeparator();
             ans = ans + users[i].toString() + "";
         }
         return ans;
