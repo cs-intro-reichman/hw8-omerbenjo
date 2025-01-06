@@ -86,17 +86,35 @@ public class Network {
      * followees as the user with the given name.
      */
     public String recommendWhoToFollow(String name) {
+        if (getUser(name) == null || getUser(name).getfCount() == 0) {
+            return null;
+        }
         User user = getUser(name);
-        int tempUser = 0;
+        int[] mutualFolloweesCount = new int[userCount];
+
         for (int i = 0; i < userCount; i++) {
             if (user == users[i]) {
                 break;
             }
-            if (user.countMutual(users[i]) >= user.countMutual(users[tempUser])) {
-                tempUser = i;
+            for (int j = 0; j < user.getfCount(); j++) {
+                
+                if(users[i].follows(user.getfFollows()[j])&& !user.follows(users[i].getName())) {
+                    mutualFolloweesCount[i]++;
             }
         }
-        return users[tempUser].getName();
+    }
+    int maxMutualFollowers = 0;
+    int mostMutualIndex = -1;
+    for (int i = 0; i < userCount; i++) {
+        if (mutualFolloweesCount[i] > maxMutualFollowers || mostMutualIndex == -1) {
+            maxMutualFollowers = mutualFolloweesCount[i];
+            mostMutualIndex = i;
+        }
+    }
+    if (mostMutualIndex == -1) {
+        return null;
+    }
+        return users[mostMutualIndex].getName();
     }
 
     /**
@@ -125,7 +143,9 @@ public class Network {
                 mostPopularIndex = i;
             }
         }
-        if(mostPopularIndex == -1) return null;
+        if (mostPopularIndex == -1) {
+            return null;
+        }
 
         return users[mostPopularIndex].getName();
     }
