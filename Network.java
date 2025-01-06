@@ -93,14 +93,14 @@ public class Network {
         int[] mutualFolloweesCount = new int[userCount];
 
         for (int i = 0; i < userCount; i++) {
-            if (user == users[i]) {
-                break;
-            }
+            if (user != users[i]) {
+            
             for (int j = 0; j < user.getfCount(); j++) {
                 
                 if(users[i].follows(user.getfFollows()[j])&& !user.follows(users[i].getName())) {
                     mutualFolloweesCount[i]++;
             }
+        }
         }
     }
     int maxMutualFollowers = 0;
