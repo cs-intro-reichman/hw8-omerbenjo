@@ -105,7 +105,7 @@ public class Network {
         int tempCounter = 0;
 
         for (int i = 0; i < userCount; i++) {
-            if (followeeCount(users[i].getName()) >= followeeCount(users[tempCounter].getName())) {
+            if (followeeCount(users[i].getName()) > followeeCount(users[tempCounter].getName())) {
                 tempCounter = i;
             }
         }
